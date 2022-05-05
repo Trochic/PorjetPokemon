@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">>
+
+<head>
+    <meta charset="utf8" />
+    <link rel="stylesheet" href="style.css">
+    <title>Projet Pokemon</title>
+</head>
+
+<body>
+    <script src="./data/pokemon.js"></script>
+    <script src="./data/pokemon_moves.js"></script>
+    <script src="./data/fast_moves.js"></script>
+    <script src="./data/charged_moves.js"></script>
+    <script src="./data/type_effectiveness.js"></script>
+    <script src="./data/pokemon_type.js"></script>
+    <script src="./data/generation.js"></script>
+    <script src="./js/attack.js"></script>
+    <script src="./js/type.js"></script>
+    <script src="./js/main.js"></script>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>nom</th>
+                <th>génération</th>
+                <th>endurance</th>
+                <th>attaque</th>
+                <th>defence</th>
+                <th>image</th>
+            </tr>
+        <tbody id="tbody">
+            <script>
+                let generation = Object.keys(generations[0]);
+                let genPokemon;
+                Pokemon.all_pokemons.forEach(element => {
+                    for (let i = 0; i < generation.length; i++) {
+                        generations[0][generation[i]].forEach(pokegen => {
+
+                            if (pokegen['name'] == element['name']) {
+
+                                genPokemon = pokegen['generation_number'];
+                            }
+
+                        })
+
+
+                    }
+
+                    //Création de la liste des pokémons sous forme d'un tableau
+                    let row = document.createElement("tr");
+
+                    let tdId = document.createElement("td");
+                    tdId.textContent = element['id'];
+                    row.appendChild(tdId);
+
+                    let tdNom = document.createElement("td");
+                    tdNom.textContent = element['name'];
+                    row.appendChild(tdNom);
+
+                    let tdGen = document.createElement("td");
+                    tdGen.textContent = genPokemon;
+                    row.appendChild(tdGen);
+
+                    let tdEnd = document.createElement("td");
+                    tdEnd.textContent = element['base_stamina'];
+                    row.appendChild(tdEnd);
+
+                    let tdAtk = document.createElement("td");
+                    tdAtk.textContent = element['base_attaque'];
+                    row.appendChild(tdAtk);
+                    
+                    let tdDef = document.createElement("td");
+                    tdDef.textContent = element['base_defense'];
+                    row.appendChild(tdDef);
+
+                    let tdImage = document.createElement("td");
+                    let image = document.createElement("img");
+                    image.src = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+element['id']+".png";;
+                    tdImage.appendChild(image);
+                    
+                    row.appendChild(tdImage);
+
+                    let tbody = document.getElementById("tbody");
+                    tbody.appendChild(row);
+
+                })
+            </script>
+        </tbody>
+
+
+        </thead>
+
+
+
+    </table>
+
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">>
+
+<head>
+    <meta charset="utf8" />
+    <link rel="stylesheet" href="style.css">
+    <title>Projet Pokemon</title>
+</head>
+
+<body>
+    <script src="./data/pokemon.js"></script>
+    <script src="./data/pokemon_moves.js"></script>
+    <script src="./data/fast_moves.js"></script>
+    <script src="./data/charged_moves.js"></script>
+    <script src="./data/type_effectiveness.js"></script>
+    <script src="./data/pokemon_type.js"></script>
+    <script src="./data/generation.js"></script>
+    <script src="./js/attack.js"></script>
+    <script src="./js/type.js"></script>
+    <script src="./js/main.js"></script>
+
+    <button id="btnBack" onclick="decrement()">back</button>
+    <button id="btnNext" onclick="increment()">next</button>
+    <script>
+        let var0tucoco = 0;
+        let pageCpt = 1;
+        let pageC;
+        let var1 = 1;
+        let var0 = 0;
+        let tPage;
+
+        function leDisplay(menu, app) {
+            if (app == 0) {
+                menu.style = 'display:block';
+            } else if (app == 1) {
+                menu.style = 'display:none';
+            }
+        }
+
+        function affichePokemon() {
+            let compteurPage = document.createElement("span");
+            compteurPage.textContent = "Page " + pageCpt;
+            document.querySelector("body").appendChild(compteurPage);
+            let table = document.createElement("table");
+            document.querySelector("body").appendChild(table);
+            let tr = document.createElement("tr");
+            let thead = document.createElement("thead");
+            table.appendChild(thead);
+            thead.appendChild(tr);
+            let thid = document.createElement("th");
+            thid.textContent = 'id';
+            tr.appendChild(thid);
+            let thnom = document.createElement("th");
+            thnom.textContent = 'nom';
+            tr.appendChild(thnom);
+            let thgen = document.createElement("th");
+            thgen.textContent = 'génération';
+            tr.appendChild(thgen)
+            let thend = document.createElement("th");
+            thend.textContent = 'endurance';
+            tr.appendChild(thend)
+            let thatk = document.createElement("th");
+            thatk.textContent = 'attaque';
+            tr.appendChild(thatk)
+            let thdef = document.createElement("th");
+            thdef.textContent = 'defense';
+            tr.appendChild(thdef)
+            let thimage = document.createElement("th");
+            thimage.textContent = 'image';
+            tr.appendChild(thimage)
+            let tbody = document.createElement("tbody");
+
+            for (var1 = 1 + var0; var1 <= 25 + var0 && var1 < Pokemon.all_pokemons.length; var1++) {
+                let row = document.createElement("tr");
+                let tdId = document.createElement("td");
+
+                if (Pokemon.all_pokemons[var1] != undefined) {
+                    tdId.textContent = Pokemon.all_pokemons[var1]['id'];
+                    tdId.setAttribute('id', Pokemon.all_pokemons[var1]['id']);
+                }
+
+                row.appendChild(tdId);
+
+                let tdNom = document.createElement("td");
+                if (Pokemon.all_pokemons[var1] != undefined) {
+                    tdNom.textContent = Pokemon.all_pokemons[var1]['name'];
+                }
+                row.appendChild(tdNom);
+
+                let tdGen = document.createElement("td");
+                if (Pokemon.all_pokemons[var1] != undefined) {
+                    tdGen.textContent = Pokemon.all_pokemons[var1]['gen'];
+                }
+                row.appendChild(tdGen);
+
+                let tdEnd = document.createElement("td");
+                if (Pokemon.all_pokemons[var1] != undefined) {
+                    tdEnd.textContent = Pokemon.all_pokemons[var1]['base_stamina'];
+                }
+                row.appendChild(tdEnd);
+                let tdAtk = document.createElement("td");
+                if (Pokemon.all_pokemons[var1] != undefined) {
+                    tdAtk.textContent = Pokemon.all_pokemons[var1]['base_attaque'];
+                }
+                row.appendChild(tdAtk);
+                let tdDef = document.createElement("td");
+                if (Pokemon.all_pokemons[var1] != undefined) {
+                    tdDef.textContent = Pokemon.all_pokemons[var1]['base_defense'];
+                }
+                row.appendChild(tdDef);
+
+                let tdImage = document.createElement("td");
+                let image = document.createElement("img");
+                if (Pokemon.all_pokemons[var1] != undefined) {
+                    image.src = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + Pokemon.all_pokemons[var1]['id'] + ".png";
+                }
+                tdImage.appendChild(image);
+
+                row.appendChild(tdImage);
+
+                let tbody = document.createElement("tbody");
+                let table = document.querySelector("table")
+                table.appendChild(tbody);
+                tbody.appendChild(row);
+                let menu = document.createElement("div");
+                let image2 = document.createElement("img");
+                menu.appendChild(image2);
+                menu.setAttribute('open', 0);
+
+                let imageSolo = document.createElement("img");
+
+                imageSolo.setAttribute('open', 0);
+
+                let hiddenTable = document.createElement("table");
+                menu.appendChild(hiddenTable);
+                let hiddenHead = document.createElement("thead");
+                hiddenTable.appendChild(hiddenHead);
+                let hiddenHeadRow = document.createElement("tr");
+                hiddenHead.appendChild(hiddenHeadRow);
+                let hiddenTableC = document.createElement("th");
+                hiddenTableC.textContent = "Charged Moves";
+                hiddenHeadRow.appendChild(hiddenTableC);
+                let hiddenTableTh = document.createElement("th");
+                hiddenTableTh.textContent = "Fast Moves";
+                hiddenHeadRow.appendChild(hiddenTableTh);
+                let hiddenTbody = document.createElement("tbody");
+                hiddenTable.appendChild(hiddenTbody);
+
+                tdImage.addEventListener('click', function(e) {
+                    leDisplay(imageSolo, imageSolo.getAttribute('open'));
+                    if (imageSolo.getAttribute('open') == 0) {
+                        if (Pokemon.all_pokemons[var1] != undefined) {
+
+                            if (tdId.getAttribute('id') >= 100) {
+                                imageSolo.src = "https://www.adl-web.fr/pokemon-base/images/" + tdId.getAttribute('id') + ".png";
+                            } else if (tdId.getAttribute('id') >= 10) {
+                                imageSolo.src = "https://www.adl-web.fr/pokemon-base/images/0" + tdId.getAttribute('id') + ".png";
+                            } else if (tdId.getAttribute('id') < 10) {
+                                imageSolo.src = "https://www.adl-web.fr/pokemon-base/images/00" + tdId.getAttribute('id') + ".png";
+                            }
+                            imageSolo.setAttribute('open', 1);
+                        }
+                    } else if (imageSolo.getAttribute('open') == 1) {
+                        imageSolo.setAttribute('open', 0);
+                    }
+                    e.stopPropagation();
+                });
+                
+                row.addEventListener('click', function() {
+                    oui(menu, menu.getAttribute('open'));
+                    if (menu.getAttribute('open') == 0) {
+                        if (Pokemon.all_pokemons[var1] != undefined) {
+
+                            if (tdId.getAttribute('id') >= 100) {
+                                image2.src = "https://www.adl-web.fr/pokemon-base/images/" + tdId.getAttribute('id') + ".png";
+                            } else if (tdId.getAttribute('id') >= 10) {
+                                image2.src = "https://www.adl-web.fr/pokemon-base/images/0" + tdId.getAttribute('id') + ".png";
+                            } else if (tdId.getAttribute('id') < 10) {
+                                image2.src = "https://www.adl-web.fr/pokemon-base/images/00" + tdId.getAttribute('id') + ".png";
+                            }
+
+                            if (document.getElementById('test' + tdId.getAttribute('id')) == null) {
+                                if (Pokemon.all_pokemons[tdId.getAttribute('id')].getCmove().length > Pokemon.all_pokemons[tdId.getAttribute('id')].getFmove().length) {
+                                    var longer = Pokemon.all_pokemons[tdId.getAttribute('id')].getCmove();
+                                } else {
+                                    var longer = Pokemon.all_pokemons[tdId.getAttribute('id')].getFmove()
+                                }
+                                for (let nbAttack = 0; nbAttack < longer.length; nbAttack++) {
+                                    let hiddenRowBody = document.createElement("tr"); //row
+                                    hiddenRowBody.id = 'test' + tdId.getAttribute('id'); //test
+                                    hiddenTbody.appendChild(hiddenRowBody); //affectation row -> tbody
+                                    let hiddenTdBody = document.createElement("td"); //td
+                                    let hiddenTdBody2 = document.createElement("td");
+                                    hiddenTdBody.textContent = Pokemon.all_pokemons[tdId.getAttribute('id')].getCmove()[nbAttack]['name'];
+                                    if (Pokemon.all_pokemons[tdId.getAttribute('id')].getFmove()[nbAttack] != undefined) {
+                                        hiddenTdBody2.textContent = Pokemon.all_pokemons[tdId.getAttribute('id')].getFmove()[nbAttack]['name'];
+                                        hiddenRowBody.appendChild(hiddenTdBody2);
+                                    }
+                                    hiddenRowBody.appendChild(hiddenTdBody);
+                                }
+                            }
+                        }
+                        menu.setAttribute('open', 1);
+                    } else if (menu.getAttribute('open') == 1) {
+                        menu.setAttribute('open', 0);
+                    }
+                });
+                menu.style = 'display:none';
+                row.appendChild(imageSolo);
+                row.appendChild(menu);
+            }
+            tPage = table;
+            pageC = compteurPage;
+        }
+        affichePokemon()
+        function increment() {
+            if (var0 < 875) {
+                var0 += 25;
+                pageCpt += 1
+                pageC.remove();
+                tPage.remove()
+                affichePokemon()
+            }
+        }
+
+        function decrement() {
+            if (var0 > 0) {
+                pageCpt -= 1
+                var0 -= 25;
+                pageC.remove();
+                tPage.remove()
+                affichePokemon()
+            }
+        }
+    </script>
+
+
+
+</body>
+
+</html>

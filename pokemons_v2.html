@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">>
+
+<head>
+    <meta charset="utf8" />
+    <link rel="stylesheet" href="style.css">
+    <title>Projet Pokemon</title>
+</head>
+
+<body>
+    <script src="./data/pokemon.js"></script>
+    <script src="./data/pokemon_moves.js"></script>
+    <script src="./data/fast_moves.js"></script>
+    <script src="./data/charged_moves.js"></script>
+    <script src="./data/type_effectiveness.js"></script>
+    <script src="./data/pokemon_type.js"></script>
+    <script src="./data/generation.js"></script>
+    <script src="./js/attack.js"></script>
+    <script src="./js/type.js"></script>
+    <script src="./js/main.js"></script>
+
+    <button id="btnBack" onclick="decrement()">back</button>
+    <button id="btnNext" onclick="increment()">next</button>
+    <script>
+
+        let compteurpage = 1;
+        let pagc;
+        let j = 1;
+        let g = 0;
+        let table_page;
+
+        function affichePokemon() {
+            let compteurPage = document.createElement("span");
+            compteurPage.textContent = "Page " + compteurpage;
+            document.querySelector("body").appendChild(compteurPage);
+            let table = document.createElement("table");
+            document.querySelector("body").appendChild(table);
+            let tr = document.createElement("tr");
+            let thead = document.createElement("thead");
+            table.appendChild(thead); thead.appendChild(tr);
+            let thid = document.createElement("th");
+            thid.textContent = 'id';
+            tr.appendChild(thid);
+            let thnom = document.createElement("th");
+            thnom.textContent = 'nom';
+            tr.appendChild(thnom);
+            let thgen = document.createElement("th");
+            thgen.textContent = 'génération';
+            tr.appendChild(thgen)
+            let thend = document.createElement("th");
+            thend.textContent = 'endurance';
+            tr.appendChild(thend)
+            let thatk = document.createElement("th");
+            thatk.textContent = 'attaque';
+            tr.appendChild(thatk)
+            let thdef = document.createElement("th");
+            thdef.textContent = 'defence';
+            tr.appendChild(thdef)
+            let thimage = document.createElement("th");
+            thimage.textContent = 'image';
+            tr.appendChild(thimage)
+            let tbody = document.createElement("tbody");
+
+            for (j = 1 + g; j <= 25 + g && j < Pokemon.all_pokemons.length; j++) {
+
+                let row = document.createElement("tr");
+                let tdId = document.createElement("td");
+                console.log(Pokemon.all_pokemons[j]);
+                if (Pokemon.all_pokemons[j] != undefined) {
+                    tdId.textContent = Pokemon.all_pokemons[j]['id'];
+                }
+
+                row.appendChild(tdId);
+
+                let tdNom = document.createElement("td");
+                if (Pokemon.all_pokemons[j] != undefined) {
+                    tdNom.textContent = Pokemon.all_pokemons[j]['name'];
+                }
+                row.appendChild(tdNom);
+
+                let tdGen = document.createElement("td");
+                if (Pokemon.all_pokemons[j] != undefined) {
+                    tdGen.textContent = Pokemon.all_pokemons[j]['gen'];
+                }
+                row.appendChild(tdGen);
+
+                let tdEnd = document.createElement("td"); if (Pokemon.all_pokemons[j] != undefined) {
+                    tdEnd.textContent = Pokemon.all_pokemons[j]['base_stamina'];
+                }
+                row.appendChild(tdEnd);
+                let tdAtk = document.createElement("td"); if (Pokemon.all_pokemons[j] != undefined) {
+                    tdAtk.textContent = Pokemon.all_pokemons[j]['base_attaque'];
+                }
+                row.appendChild(tdAtk);
+                let tdDef = document.createElement("td"); if (Pokemon.all_pokemons[j] != undefined) {
+                    tdDef.textContent = Pokemon.all_pokemons[j]['base_defense'];
+                }
+                row.appendChild(tdDef);
+
+                let tdImage = document.createElement("td");
+                let image = document.createElement("img"); if (Pokemon.all_pokemons[j] != undefined) {
+                    image.src = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + Pokemon.all_pokemons[j]['id'] + ".png";
+                }
+                tdImage.appendChild(image);
+
+                row.appendChild(tdImage);
+
+                let tbody = document.createElement("tbody");
+                let table = document.querySelector("table")
+                table.appendChild(tbody);
+                tbody.appendChild(row);
+
+            }
+            table_page = table;
+            pagc = compteurPage;
+        }
+
+        affichePokemon()
+
+        function increment() {
+            if (g <875) {
+                g += 25;
+                compteurpage += 1
+                pagc.remove();
+                table_page.remove()
+                affichePokemon()
+            }
+        }
+        function decrement() {
+            if (g > 0) {
+                compteurpage -= 1
+                g -= 25;
+                pagc.remove();
+                table_page.remove()
+                affichePokemon()
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
